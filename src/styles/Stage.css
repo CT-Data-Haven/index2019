@@ -1,0 +1,16 @@
+.Stage {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.Stage h3 {
+  font-size: 1.2rem;
+}
+
+.Stage.ChartStage {
+  min-height: 480px;
+}
+
+.Stage.TableStage div.card-body {
+  padding: 0;
+}

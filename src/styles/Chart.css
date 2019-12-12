@@ -1,0 +1,33 @@
+.Chart {
+  font-family: 'Barlow Semi Condensed', 'Roboto', sans-serif;
+}
+
+.Chart .axis {
+
+}
+
+.Chart line.axis {
+  /* stroke: #bbb; */
+  /* stroke-width: 2px; */
+}
+
+.Chart .axis text {
+  fill: #444;
+}
+
+.Chart .axis path {
+  stroke: lightgrey;
+}
+
+.Chart .axis line.axis-baseline {
+  stroke: #bbb;
+  stroke-width: 2px;
+}
+
+.Chart .ordinal-labels text {
+  font-size: 0.9rem;
+}
+
+.Chart .axis-title text {
+  font-family: 'Barlow', 'Barlow Semi Condensed', 'Roboto';
+}

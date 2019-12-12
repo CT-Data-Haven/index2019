@@ -1,0 +1,23 @@
+.Tooltip {
+  background-color: #333;
+  color: white;
+  line-height: 0.8em;
+  font-size: 0.9em;
+  opacity: 0.7;
+  padding: 4px;
+  border-radius: 4px;
+  z-index: 1000;
+  transform: translateX(-50%) translateY(5px);
+  position: relative;
+  min-width: 100px;
+}
+
+.Tooltip h5 {
+  margin-bottom: 0.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.Tooltip p {
+  margin-bottom: 0.1rem;
+}

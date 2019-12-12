@@ -1,0 +1,8 @@
+.DataTable {
+
+}
+
+.DataTable#datatable table {
+  /* overflow: auto; */
+  /* table-layout: auto; */
+}
