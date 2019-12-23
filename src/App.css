@@ -1,6 +1,7 @@
 .App {
-  font-size: 1rem;
-  padding: 2em;
+  font-size: 1.2rem;
+  /* padding: 2em; */
+  padding-bottom: 2em;
 }
 
 .App header h1 {
@@ -12,8 +13,9 @@
   margin: 1em 0 0.5em 0;
 }
 
-.App-link {
-  /* color: #c209d2; */
+.App a {
+  color: #0791e9;
+  font-weight: 600;
 }
 
 .App hr {

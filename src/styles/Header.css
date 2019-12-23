@@ -1,0 +1,14 @@
+.Header {
+
+}
+
+.Header .navbar .navbar-nav a.nav-link,
+.Header .navbar .navbar-pills a.nav-link {
+  padding-left: 1.2em;
+  padding-right: 1.2em;
+  margin: 2px 8px;
+}
+
+.Header .navbar .nav-pills a.nav-link.active {
+  border-bottom: 3px solid #DFD7CA;
+}

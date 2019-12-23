@@ -4,4 +4,6 @@
 
 .Dash .second {
   background-color: #F2EDE5;
+  border: 1px solid #dfd7ca;
+  border-radius: 3px;
 }

@@ -3,28 +3,20 @@ import { cleanIdxLabels } from './utils.js';
 
 import '../styles/Tooltip.css';
 
-const Tip = ({ data, type, v1, v2, hdr }) => {
-  const v1Lbl = cleanIdxLabels(v1).match(/[A-Z]/g).join('');
-  const v2Lbl = cleanIdxLabels(v2).match(/[A-Z]/g).join('');
-  let content;
-  if (type === 'bar') {
-    content = (<p><span>{`${ v1Lbl }:`}</span> { data[v1] }</p>);
-  } else {
-    content = (
-      <>
-        <p><span>{`${ v1Lbl }:`}</span> { data[v1] }</p>
-        <p><span>{`${ v2Lbl }:`}</span> { data[v2] }</p>
-      </>
-    );
-  }
-  const tooltip = (
-    <>
-      <h5>{ data[hdr] }</h5>
-      { content }
-    </>
-  );
+const Tip = (props) => {
+  const lbls = props.tipLblr ? props.vs.map(props.tipLblr) : props.vs;
+  const content = props.vs.map((d, i) => (
+    <div key={ `tip-div${ i }` }>
+      <p key={ `tip-p${ i }` }><span key={ `tip${ i }` }>{ lbls[i].length ? `${ lbls[i] }: ` : '' } </span>{ props.numFmt(props.data[d]) }</p>
+    </div>
+));
 
-  return (<div className='Tooltip'>{ tooltip }</div>);
+  return (
+    <div className='Tooltip'>
+      <h5>{ props.data[props.hdr] }</h5>
+      { content }
+    </div>
+  );
 };
 
 export default Tip;

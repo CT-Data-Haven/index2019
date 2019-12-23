@@ -12,6 +12,8 @@
     "react-bootstrap-table-next": "^3.2.1",
     "react-dom": "^16.10.2",
     "react-hook-form": "^3.24.1",
+    "react-hooks-lib": "^0.1.0",
+    "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "semiotic": "1.20.3",

@@ -7,10 +7,17 @@
   font-size: 1.2rem;
 }
 
-.Stage.ChartStage {
+.Stage.ChartStage, .Stage.ProfileStage {
   min-height: 480px;
 }
 
 .Stage.TableStage div.card-body {
   padding: 0;
+}
+
+.Stage .axis-title {
+  color: #444;
+  padding-right: 1rem;
+  font-size: 0.9em;
+  font-family: 'Barlow', 'Barlow Semi Condensed', 'Roboto';
 }
