@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect, useLocation } from 'react-router-dom';
 
 import './App.css';
 
@@ -35,19 +35,21 @@ const useDownload = () => {
 };
 
 const App = () => {
+  const download = useDownload();
   return (
     <div className="App">
       <Header hdrs={ hdrs } />
 
       <Switch>
-        <Route path='/scores'>
+        <Route exact path='/' render={ () => <Redirect to='/scores' /> } />
+        <Route exact path='/scores'>
           <Scores
             index_data={ index_data }
             index_comps={ index_comps }
             meta={ score_meta }
           />
         </Route>
-        <Route path='/survey'>
+        <Route exact path='/survey'>
           <Survey
             cws_data={ cws_data }
             meta={ cws_meta }
@@ -55,8 +57,8 @@ const App = () => {
         </Route>
 
       </Switch>
+      { download.location.length ? <Footer { ...download } /> : null }
 
-      <Footer { ...useDownload() } />
     </div>
   );
 };
