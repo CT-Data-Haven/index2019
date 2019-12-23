@@ -2,7 +2,7 @@
   "name": "indexviz",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ct-data-haven.github.io/index2019",
+  "homepage": "https://ct-data-haven.github.io/indexviz2019",
   "dependencies": {
     "bootstrap": "^4.4.1",
     "cartocolor": "^4.0.0",
