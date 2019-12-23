@@ -11,9 +11,9 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import './index.css';
 
 ReactDOM.render(
-  <Router>
+  <Router basename='/indexviz2019'>
     <App />
-  </Router>, 
+  </Router>,
   document.getElementById('root')
 );
 
