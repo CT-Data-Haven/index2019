@@ -1,7 +1,7 @@
 {
-  "name": "indexviz",
+  "name": "indexviz2019",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "homepage": "https://ct-data-haven.github.io/indexviz2019",
   "dependencies": {
     "bootstrap": "^4.4.1",
