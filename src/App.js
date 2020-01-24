@@ -15,11 +15,12 @@ import score_meta from './data/score_meta.json';
 // to survey
 import cws_data from './data/cws_indicators.json';
 import cws_meta from './data/cws_meta.json';
+import dl_meta from './data/downloads.json';
 
-const downloads = {
-  scores: 'index_scores_2019',
-  survey: 'cws_survey_2018'
-};
+// const downloads = {
+//   scores: 'index_scores_2019',
+//   survey: 'cws_survey_2018'
+// };
 const hdrs = {
   scores: 'Index scores',
   survey: 'Wellbeing indicators'
@@ -29,7 +30,8 @@ const useDownload = () => {
   const location = useLocation().pathname.substring(1);
   return {
     location: location,
-    url: downloads[location],
+    urls: dl_meta[location],
+    dw: 'https://data.world/camille86/cws2018',
     display: hdrs[location]
   };
 };

@@ -47,6 +47,7 @@ const DataTable = ({ v1, meta, spark, sort }) => {
       <BootstrapTable
         bootstrap4
         hover
+        condensed
         classes='table-responsive-xl'
         headerClasses='thead-light'
         bordered={ true }
