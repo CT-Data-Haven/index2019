@@ -1,17 +1,21 @@
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'leaflet/dist/leaflet.css';
+// import './styles/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import './index.css';
 
 ReactDOM.render(
-  <Router basename='/indexviz2019'>
+  <Router basename={ process.env.PUBLIC_URL + '/' }>
     <App />
   </Router>,
   document.getElementById('root')

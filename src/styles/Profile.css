@@ -1,0 +1,12 @@
+.Profile {
+  
+}
+
+.Profile table {
+  font-size: 1.1rem;
+}
+
+.Profile table th,
+.Profile table td {
+  padding: 0.5em;
+}

@@ -1,32 +1,26 @@
 import React from 'react';
 import { ResponsiveOrdinalFrame } from 'semiotic';
 import { Vivid } from 'cartocolor';
-import * as _ from 'lodash';
 
-import DataContext from './DataContext';
-import Tip from './Tip';
 import '../styles/Chart.css';
 
-import { cleanIdxLabels, cleanHdrLabels, createScales, wrapTspan } from './utils.js';
+import { createScales } from './utils.js';
 
 const BarChart = (props) => {
-  const data = React.useContext(DataContext);
-  const { colorscale, sizescale } = createScales(data, Vivid, props.colorVar, props.colorVar === 'category');
+  const { colorscale } = createScales(props.data, Vivid, props.colorVar, props.colorVar === 'category');
   const fmt = props.numFmt || ((d) => d);
 
-  const labels = data.map((d) => ({
+  const labels = props.data.map((d) => ({
     label: fmt(d[props.rAccess]),
     [props.oAccess]: d[props.oAccess],
     [props.rAccess]: d[props.rAccess],
     type: 'bar-label'
   }));
 
-
-
   return (
     <div className='Chart'>
       <ResponsiveOrdinalFrame
-        data={ data }
+        data={ props.data }
         margin={ { top: 10, right: 10, bottom: 10, left: 120 } }
         oAccessor={ props.oAccess }
         rAccessor={ props.rAccess }
@@ -67,6 +61,7 @@ const IdxBarChart = (props) => {
 
   return (
     <BarChart
+      data={ props.data }
       oAccess={ oAccess }
       rAccess={ rAccess }
       colorVar={ colorVar }
@@ -77,6 +72,7 @@ const IdxBarChart = (props) => {
 const QBarChart = (props) => {
   return (
     <BarChart
+      data={ props.data }
       oAccess={ 'group' }
       rAccess={ props.vs[0] }
       colorVar={ 'category' }

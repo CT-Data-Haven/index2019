@@ -1,5 +1,4 @@
 import React from 'react';
-import { cleanIdxLabels } from './utils.js';
 
 import '../styles/Tooltip.css';
 

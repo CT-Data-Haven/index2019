@@ -1,14 +1,11 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
 
-import DataContext from './DataContext';
 import { cleanHdrLabels, tblColumns, fmt, getMaxes } from './utils.js';
 
 import '../styles/DataTable.css';
 
-const DataTable = ({ v1, meta, spark, sort }) => {
-  const data = React.useContext(DataContext);
+const DataTable = ({ data, v1, meta, spark, sort }) => {
   const isCommunity = v1 === 'community';
   const mightOmit = isCommunity ? ['group'] : ['name'];
   const omit = ['level', 'category', 'region', ...mightOmit];

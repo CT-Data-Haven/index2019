@@ -3,7 +3,12 @@
 }
 
 .Dash .second {
-  background-color: #F2EDE5;
-  border: 1px solid #dfd7ca;
+  background-color: #e5e9f2;
+  border: 1px solid #cbcadf;
   border-radius: 3px;
+  padding-top: 1em;
+}
+
+.Dash .second + div.Controls {
+  padding-top: 0;
 }

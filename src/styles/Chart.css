@@ -50,3 +50,13 @@
 .Chart g.direct-label.dark text {
   fill: #303030;
 }
+
+.Chart.Choropleth {
+  width: 100%;
+}
+
+.Chart .leaflet-container {
+  width: 100%;
+  min-height: 500px;
+  margin: 0 auto;
+}

@@ -6,16 +6,15 @@ import '../styles/Header.css';
 
 const Header = (props) => (
   <div className='Header'>
-    <Navbar expand='md' >
+    <Navbar expand='md' variant='light' bg='light'>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav variant='pills'>
-          <LinkContainer to='/scores'>
-            <Nav.Link>{ props.hdrs.scores }</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to='/survey'>
-            <Nav.Link>{ props.hdrs.survey }</Nav.Link>
-          </LinkContainer>
+          { props.hdrs.map((h) => (
+            <LinkContainer to={ '/' + h.location } key={ `page-${ h.location }` }>
+              <Nav.Link>{ h.title }</Nav.Link>
+            </LinkContainer>
+          )) }
         </Nav>
       </Navbar.Collapse>
     </Navbar>

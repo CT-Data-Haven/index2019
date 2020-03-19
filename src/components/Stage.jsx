@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 
 import '../styles/Stage.css';
-import { cleanIdxLabels, cleanHdrLabels, compileHeader } from './utils.js';
+import { cleanHdrLabels, compileHeader } from './utils.js';
 
 
 

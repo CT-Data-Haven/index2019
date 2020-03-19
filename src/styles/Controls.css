@@ -2,6 +2,10 @@
   margin-top: 0.5rem;
 }
 
+.Controls select.custom-select {
+  color: #343a3f;
+}
+
 .SparkControls {
   display: inline;
   color: #333;

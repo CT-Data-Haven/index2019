@@ -1,8 +1,7 @@
 import React from 'react';
 import { Form, Col, Row } from 'react-bootstrap';
-import * as _ from 'lodash';
-import { FormContext, useFormContext } from 'react-hook-form';
-import { cleanIdxLabels, cleanHdrLabels } from './utils.js';
+import { useFormContext } from 'react-hook-form';
+import { cleanIdxLabels, cleanHdrLabels, getComparables } from './utils.js';
 
 import '../styles/Controls.css';
 
@@ -39,7 +38,7 @@ const ScoreMainControls = (props) => {
 
 const ScoreCompareControls = (props) => {
   const { register } = useFormContext();
-  const yvariables = _.drop(props.variables, 1).concat(_.take(props.variables, 1));
+  const yvariables = getComparables(props.variables);
 
   return (
     <div className='Controls'>
@@ -74,7 +73,29 @@ const SparkControls = (props) => (
       label='Show data bars'
     />
   </div>
-  );
+);
+
+const SurveyTopicFragment = (props) => (
+  <React.Fragment>
+    <Form.Group controlId='topicSelect'>
+      <Form.Label>Select a topic</Form.Label>
+      <Form.Control as='select' name='topicSelect' className='custom-select' ref={ props.register } onChange={ props.onChange }>
+        { props.topics.map((d, i) => (
+          <option key={ d + 'topicopt' } value={ d }>{ cleanHdrLabels(d) }</option>
+        )) }
+      </Form.Control>
+    </Form.Group>
+
+    <Form.Group controlId='qSelect'>
+      <Form.Label>Select survey question</Form.Label>
+      <Form.Control as='select' name='qSelect' className='custom-select' ref={ props.register } onChange={ props.onChange }>
+        { props.topicMeta.map((d, i) => (
+          <option key={ d.indicator + 'qopt' } value={ d.indicator }>{ d.display }</option>
+        )) }
+      </Form.Control>
+    </Form.Group>
+  </React.Fragment>
+);
 
 const SurveyMainControls = (props) => {
   const { register } = useFormContext();
@@ -93,23 +114,7 @@ const SurveyMainControls = (props) => {
               </Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='topicSelect'>
-              <Form.Label>Select a topic</Form.Label>
-              <Form.Control as='select' name='topicSelect' className='custom-select' ref={ register } onChange={ props.onChange }>
-                { props.topics.map((d, i) => (
-                  <option key={ d + 'topicopt' } value={ d }>{ cleanHdrLabels(d) }</option>
-                )) }
-              </Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId='qSelect'>
-              <Form.Label>Select survey question</Form.Label>
-              <Form.Control as='select' name='qSelect' className='custom-select' ref={ register } onChange={ props.onChange }>
-                { props.topicMeta.map((d, i) => (
-                  <option key={ d.question + 'qopt' } value={ d.question }>{ d.display }</option>
-                )) }
-              </Form.Control>
-            </Form.Group>
+            <SurveyTopicFragment { ...props } register={ register } />
           </Col>
         </Row>
       </Form>
@@ -138,7 +143,7 @@ const SurveyProfileControls = (props) => {
                     </optgroup>
                   ))
                 }
-            </Form.Control>
+              </Form.Control>
             </Form.Group>
           </Col>
         </Row>
@@ -147,7 +152,22 @@ const SurveyProfileControls = (props) => {
   )
 };
 
+const RiskMainControls = (props) => {
+  const { register } = useFormContext();
+
+  return (
+    <div className='Controls'>
+      <Form>
+        <Row>
+          <Col>
+            <SurveyTopicFragment { ...props } register={ register } />
+          </Col>
+        </Row>
+      </Form>
+    </div>
+  )
+};
 
 
 // export default Controls;
-export { ScoreMainControls, ScoreCompareControls, SurveyMainControls, SurveyProfileControls, SparkControls };
+export { ScoreMainControls, ScoreCompareControls, SurveyMainControls, SurveyProfileControls, SparkControls, RiskMainControls };

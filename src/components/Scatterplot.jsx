@@ -1,10 +1,8 @@
 import React from 'react';
-import { ResponsiveXYFrame, FacetController } from 'semiotic';
-import { AnnotationBadge, AnnotationCallout, AnnotationCalloutCircle } from 'react-annotation';
+import { ResponsiveXYFrame } from 'semiotic';
 import { Vivid } from 'cartocolor';
 import * as _ from 'lodash';
 
-import DataContext from './DataContext';
 import Legend from './Legend';
 import Tip from './Tip';
 import '../styles/Chart.css';
@@ -12,14 +10,11 @@ import '../styles/Chart.css';
 import { cleanIdxLabels, createScales } from './utils.js';
 
 const Scatterplot = (props) => {
-  const data = React.useContext(DataContext);
-
-  // const { v1, v2 } = props;
   const [xAccess, yAccess] = props.vs;
-  const { colorscale, sizescale } = createScales(data, Vivid, 'level', false);
+  const { colorscale, sizescale } = createScales(props.data, Vivid, 'level', false);
 
-  const xRange = [_.min(_.map(data, xAccess)), _.max(_.map(data, xAccess))];
-  const yRange = [_.min(_.map(data, yAccess)), _.max(_.map(data, yAccess))];
+  const xRange = [_.min(_.map(props.data, xAccess)), _.max(_.map(props.data, xAccess))];
+  const yRange = [_.min(_.map(props.data, yAccess)), _.max(_.map(props.data, yAccess))];
   const pad = 0.05;
   const margin = { top: 10, right: 10, bottom: 60, left: 80 };
   const fmt = props.numFmt || ((d) => d);
@@ -27,7 +22,7 @@ const Scatterplot = (props) => {
   return (
     <div className='Chart'>
       <ResponsiveXYFrame
-        points={ data }
+        points={ props.data }
         margin={ margin }
         size={ [600, 500] }
         xAccessor={ xAccess }

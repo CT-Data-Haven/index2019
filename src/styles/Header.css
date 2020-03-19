@@ -7,8 +7,18 @@
   padding-left: 1.2em;
   padding-right: 1.2em;
   margin: 2px 8px;
+  color: #076ad4;
+  display: block;
+}
+
+.Header .navbar .navbar-nav a.nav-link:hover {
+  /* background-color: #e0e7ed; */
+  text-decoration: underline;
+  /* border-bottom: 2px solid #d0d7df; */
 }
 
 .Header .navbar .nav-pills a.nav-link.active {
-  border-bottom: 3px solid #DFD7CA;
+  /* border-bottom: 3px solid #DFD7CA; */
+  color: #fff;
+  background-color: #045bb9;
 }

@@ -1,12 +1,27 @@
 import React from 'react';
 import { Alert } from 'react-bootstrap';
+import ReactMarkdown from 'react-markdown';
+import { NoteContext } from './NoteContext.js';
+
+import '../styles/Intro.css';
 
 const Intro = (props) => (
-  <div className='Intro'>
-    <Alert variant='light' className='border border-color-info'>
-      Deserunt excepteur quis nulla aliquip fugiat amet velit irure proident aliqua aute. Irure elit laboris duis minim nostrud quis eiusmod. Consequat cillum occaecat do laborum enim cupidatat aute. Ex cillum nulla aute amet culpa minim et. Proident do dolor ullamco et pariatur excepteur laborum. Veniam nisi voluptate aliquip nulla excepteur commodo cupidatat consectetur nostrud officia. Non minim magna adipisicing officia exercitation tempor incididunt.
-    </Alert>
-  </div>
+  <NoteContext.Consumer>
+    {
+      ({ noteOpen, handleClose }) => (
+        <div className='Intro'>
+          {noteOpen && <Alert variant='info' dismissible onClose={ handleClose } className='border border-color-info'>
+            <Alert.Heading>A note from DataHaven</Alert.Heading>
+            <ReactMarkdown source={ props.intro['covid'] } escapeHtml={ false } />
+          </Alert>}
+
+          <Alert variant='light' className='border border-color-dark'>
+            <ReactMarkdown source={ props.intro[props.page] } />
+            <p>For more information, visit DataHaven's <a href="http://www.ctdatahaven.org/communities">Communities</a> page or <a href="http://www.ctdatahaven.org">main website</a>.</p>
+          </Alert>
+        </div>
+      )}
+  </NoteContext.Consumer>
 );
 
 export default Intro;
