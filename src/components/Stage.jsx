@@ -4,43 +4,23 @@ import { Card } from 'react-bootstrap';
 import '../styles/Stage.css';
 import { cleanHdrLabels, compileHeader } from './utils.js';
 
-
-
 const Stage = (props) => {
   const hdr = compileHeader(props.type)({ ...props });
 
   return (
-    <Card>
-      <Card.Header as='h3'>
-        { hdr }
-        { props.hdrComponents || null }
-      </Card.Header>
-      <Card.Body>
-        { props.children }
-      </Card.Body>
-      <Card.Footer className='text-right axis-title'>{ props.axisLbl || null }</Card.Footer>
-    </Card>
+    <div className='Stage'>
+      <Card>
+        <Card.Header as='h3'>
+          { hdr }
+          { props.hdrComponents || null }
+        </Card.Header>
+        <Card.Body className={ props.flush && 'p-0' }>
+          { props.children }
+        </Card.Body>
+        <Card.Footer className='text-right axis-title'>{ props.axisLbl || null }</Card.Footer>
+      </Card>
+    </div>
   );
 };
 
-const ChartStage = (props) => (
-  <div className='Stage ChartStage'>
-    <Stage
-      lbls={ props.lbls.map((d) => d || cleanHdrLabels(d)) }
-      { ...props }
-    />
-  </div>
-);
-
-
-const TableStage = (props) => (
-  <div className={ 'Stage TableStage ' + (props.steez || '') }>
-    <Stage
-      type={ props.type || 'table' }
-      { ...props }
-    />
-  </div>
-);
-
-
-export { ChartStage, TableStage };
+export default Stage;

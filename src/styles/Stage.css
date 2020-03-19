@@ -1,18 +1,12 @@
 .Stage {
   width: 100%;
+  min-height: 480px;
   margin-bottom: 1.5rem;
 }
 
-.Stage h3 {
+.Stage .card-header {
   font-size: 1.2rem;
-}
-
-.Stage.ChartStage, .Stage.ProfileStage {
-  min-height: 480px;
-}
-
-.Stage.TableStage div.card-body {
-  padding: 0;
+  font-weight: 500;
 }
 
 .Stage .axis-title {

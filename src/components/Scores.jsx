@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import useForm, { FormContext } from 'react-hook-form';
 
-import { ChartStage, TableStage } from './Stage';
+import Stage from './Stage';
 import Scatterplot from './Scatterplot';
 import { IdxBarChart } from './BarChart';
 import { ScoreMainControls, ScoreCompareControls, SparkControls } from './Controls';
@@ -66,11 +66,10 @@ const Scores = ({ index_data, index_comps, meta, intro }) => {
             </FormContext>
 
             { /* bar chart */ }
-            <ChartStage
-              vs={ [v1, v2] }
-              region={ region }
-              lbls={ [cleanIdxLabels(v1)] }
-              type='bar'
+            <Stage
+              type='lblBy2'
+              lbl={ cleanIdxLabels(v1) }
+              grouping={ region }
               dataBy={ v1 === 'community' ? 'location' : 'group' }
               axisLbl={ 'Scores 0 (worse) through 1,000 (better)' }
             >
@@ -78,7 +77,7 @@ const Scores = ({ index_data, index_comps, meta, intro }) => {
                 data={ filterForBar(index_data, region, v1) }
                 vs={ [v1] }
               />
-            </ChartStage>
+            </Stage>
           </Col>
 
           <Col md={ 6 } className='second'>
@@ -92,18 +91,16 @@ const Scores = ({ index_data, index_comps, meta, intro }) => {
             </FormContext>
 
             { /* scatterplot */ }
-            <ChartStage
-              vs={ [v1, v2] }
-              region={ region }
+            <Stage
               lbls={ [v1, v2].map((d) => cleanIdxLabels(d)) }
-              type='scatter'
+              type='versus'
               axisLbl={ 'Scores 0 (worse) through 1,000 (better)' }
             >
               <Scatterplot
                 data={ filterForScatter(index_data, region) }
                 vs={ [v1, v2] }
               />
-            </ChartStage>
+            </Stage>
           </Col>
         </Row>
 
@@ -113,12 +110,13 @@ const Scores = ({ index_data, index_comps, meta, intro }) => {
           <Col>
             <h2>What are these scores made of?</h2>
 
-            <TableStage
-              v1={ v1 }
-              region={ region }
-              type='table'
-              lbls={ [cleanIdxLabels(v1)] }
+            <Stage
+              grouping={ region }
+              type='lblBy2'
+              lbl={ 'Components of the ' + cleanIdxLabels(v1) }
               dataBy={ v1 === 'community' ? 'location' : 'group' }
+              axisLbl={ v1 === 'community' ? '' : 'Share of adults' }
+              flush
               hdrComponents={ <SparkControls checked={ spark } onChange={ onToggleChange } /> }
             >
               <DataTable v1={ v1 } meta={ meta[v1] }
@@ -126,7 +124,7 @@ const Scores = ({ index_data, index_comps, meta, intro }) => {
                 spark={ spark }
                 sort={ true }
               />
-            </TableStage>
+            </Stage>
           </Col>
         </Row>
       </Container>

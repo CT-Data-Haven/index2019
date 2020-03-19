@@ -37,11 +37,11 @@ const wrapTspan = (txt) => (
 
 const compileHeader = (type) => {
   const headers = {
-    scatter: '<%= lbls[0] %> vs. <%= lbls[1] %>',
-    bar: '<%= lbls[0] %> by <%= dataBy %>, <%= region %>',
-    table: 'Components of <%= lbls[0] %> by <%= dataBy %>, <%= region %>',
-    profile: '<%= lbls[0] %>, <%= group %>',
-    map: '<%= lbls[0] %> by <%= dataBy %>'
+    versus: '<%= lbls[0] %> vs. <%= lbls[1] %>',
+    colon: '<%= lbl %>: <%= dataBy %>, <%= grouping %>',
+    comma: '<%= lbl %>, <%= grouping %>',
+    lblBy: '<%= lbl %> by <%= dataBy %>',
+    lblBy2: '<%= lbl %> by <%= dataBy %>, <%= grouping %>'
   };
   return _.template(headers[type]);
 };

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import useForm, { FormContext } from 'react-hook-form';
 
-import { ChartStage, TableStage } from './Stage';
+import Stage from './Stage';
 import { QBarChart } from './BarChart';
 import { SurveyMainControls, SurveyProfileControls } from './Controls';
 import Intro from './Intro';
@@ -84,12 +84,11 @@ const Survey = ({ cws_data, meta, intro }) => {
         <Row>
           <Col md={ 6 }>
             { /* bar chart */ }
-            <ChartStage
-              vs={ [indicator] }
-              region={ region }
-              type='bar'
-              lbls={ [qDisplay.display] }
+            <Stage
+              type='lblBy2'
+              lbl={ qDisplay.display }
               dataBy={ 'group' }
+              grouping={ region }
               axisLbl={ qDisplay.denom }
             >
               <QBarChart
@@ -97,7 +96,7 @@ const Survey = ({ cws_data, meta, intro }) => {
                 vs={ [indicator] }
                 numFmt={ fmt('0.0%') }
               />
-            </ChartStage>
+            </Stage>
           </Col>
 
           <Col md={ 6 } className='second'>
@@ -109,12 +108,13 @@ const Survey = ({ cws_data, meta, intro }) => {
               />
             </FormContext>
             { /* profile */ }
-            <TableStage
-              steez='ProfileStage'
-              group={ group }
-              type='profile'
-              lbls={ [cleanHdrLabels(topic)] }
+            <Stage
+              type='colon'
+              lbl={ cleanHdrLabels(topic) }
+              grouping={ region }
+              dataBy={ group }
               axisLbl={ 'Share of adults' }
+              flush
             >
               <Profile
                 data={ profileData }
@@ -122,7 +122,7 @@ const Survey = ({ cws_data, meta, intro }) => {
                 meta={ meta[topic] }
                 cols={ ['Survey question', 'Value'] }
               />
-            </TableStage>
+            </Stage>
           </Col>
         </Row>
       </Container>

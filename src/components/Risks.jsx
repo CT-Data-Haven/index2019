@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import useForm, { FormContext } from 'react-hook-form';
 import { schemeBuPu as palette } from 'd3-scale-chromatic';
 
-import { ChartStage, TableStage } from './Stage';
+import Stage from './Stage';
 import { RiskMainControls } from './Controls';
 import Intro from './Intro';
 import Choropleth from './Choropleth';
@@ -73,11 +73,12 @@ const Risks = ({ town_data, meta, shape, intro }) => {
 
         <Row>
           <Col md={ 6 }>
-            <ChartStage
-              type='map'
-              lbls={ [qDisplay.display] }
+            <Stage
+              type='lblBy'
+              lbl={ qDisplay.display }
               dataBy={ 'town' }
               axisLbl={ qDisplay.denom }
+              flush
             >
               <Choropleth
                 data={ mapData }
@@ -86,15 +87,15 @@ const Risks = ({ town_data, meta, shape, intro }) => {
                 meta={ { format: '.0%' } }
                 onClick={ onFeatureClick }
               />
-            </ChartStage>
+            </Stage>
           </Col>
           <Col md={ 6 } className='second'>
-            <TableStage
-              steez='ProfileStage'
-              group={ town }
-              type='profile'
-              lbls={ [cleanHdrLabels(topic)] }
+            <Stage
+              type='comma'
+              lbl={ cleanHdrLabels(topic) }
+              grouping={ town }
               axisLbl={ qDisplay.denom }
+              flush
             >
               <Profile
                 data={ profileData }
@@ -102,7 +103,7 @@ const Risks = ({ town_data, meta, shape, intro }) => {
                 meta={ meta[topic] }
                 cols={ [ 'Survey question', 'Value' ] }
               />
-            </TableStage>
+            </Stage>
           </Col>
         </Row>
       </Container>
