@@ -1,7 +1,17 @@
 .Legend {
-
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-right: 0.5em;
+  margin-bottom: 1.7em;
+  border: 1px solid #ddd;
+  z-index: 1000;
+  padding: 0.5em;
+  font-size: 1.0rem;
+  font-family: 'Barlow Semi Condensed';
+  background-color: #ffffffee;
 }
 
-.Legend tspan {
-
+.Legend div.vx-legend-shape > div {
+  border: 1px solid #888;
 }

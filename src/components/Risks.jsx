@@ -90,7 +90,7 @@ const Risks = ({ town_data, meta, shape, intro }) => {
           </Col>
           <Col md={ 6 } className='second'>
             <TableStage
-              style='ProfileStage'
+              steez='ProfileStage'
               group={ town }
               type='profile'
               lbls={ [cleanHdrLabels(topic)] }

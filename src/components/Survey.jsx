@@ -110,7 +110,7 @@ const Survey = ({ cws_data, meta, intro }) => {
             </FormContext>
             { /* profile */ }
             <TableStage
-              style='ProfileStage'
+              steez='ProfileStage'
               group={ group }
               type='profile'
               lbls={ [cleanHdrLabels(topic)] }

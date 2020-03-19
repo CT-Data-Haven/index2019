@@ -53,6 +53,11 @@
 
 .Chart.Choropleth {
   width: 100%;
+  position: relative;
+}
+
+.Chart.Scatterplot {
+  position: relative;
 }
 
 .Chart .leaflet-container {

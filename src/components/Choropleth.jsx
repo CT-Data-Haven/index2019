@@ -1,6 +1,7 @@
 import React from 'react';
 import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import { getBounds, makeGeoJson, makeTooltip } from './utils.js';
+import Legend from './Legend';
 
 import '../styles/Chart.css';
 
@@ -72,6 +73,16 @@ export default class Choropleth extends React.Component {
             onClick={ this.props.onClick }
           />
         </Map>
+
+        <Legend
+          scale={ this.props.colorscale }
+          format={ this.props.meta.format }
+          type='threshold'
+          style={ {
+            right: 0,
+            bottom: 0
+          } }
+        />
       </div>
     )
   }

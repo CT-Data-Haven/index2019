@@ -23,7 +23,7 @@ const cleanIdxLabels = (lbl) => (
 const cleanKeys = (obj, first = true) => (
   _.chain(obj)
     .keys()
-    .map((d) => cleanHdrLabels(d, first = first))
+    .map((d) => cleanHdrLabels(d, first))
     .value()
 );
 

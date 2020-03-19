@@ -34,7 +34,7 @@ const ChartStage = (props) => (
 
 
 const TableStage = (props) => (
-  <div className={ props.style ? 'Stage TableStage ' + props.style : 'Stage TableStage' }>
+  <div className={ 'Stage TableStage ' + (props.steez || '') }>
     <Stage
       type={ props.type || 'table' }
       { ...props }

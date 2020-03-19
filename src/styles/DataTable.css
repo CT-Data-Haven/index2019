@@ -4,6 +4,12 @@
 
 .DataTable table {
   margin: 0;
+
+}
+
+.DataTable table .table-bordered td,
+.DataTable table .table-bordered th {
+  border-color: #c3cce2;
 }
 
 .DataTable .spark {
@@ -24,7 +30,6 @@
 .DataTable table td.position-sticky {
   left: 0;
   z-index: 1;
-  border-color: #DFD7CA;
   /* border-width: 1px 2px 1px 1px; */
   background-clip: padding-box;
   border-collapse: collapse;

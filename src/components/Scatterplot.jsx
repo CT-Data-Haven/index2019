@@ -7,7 +7,7 @@ import Legend from './Legend';
 import Tip from './Tip';
 import '../styles/Chart.css';
 
-import { cleanIdxLabels, createScales } from './utils.js';
+import { cleanIdxLabels, createScales, titleLabel } from './utils.js';
 
 const Scatterplot = (props) => {
   const [xAccess, yAccess] = props.vs;
@@ -20,7 +20,7 @@ const Scatterplot = (props) => {
   const fmt = props.numFmt || ((d) => d);
 
   return (
-    <div className='Chart'>
+    <div className='Chart Scatterplot'>
       <ResponsiveXYFrame
         points={ props.data }
         margin={ margin }
@@ -40,7 +40,7 @@ const Scatterplot = (props) => {
           { orient: 'bottom', label: cleanIdxLabels(xAccess), baseline: 'under', tickFormat: fmt }
         ]}
         responsiveWidth={ true }
-        foregroundGraphics={ <Legend color={ colorscale } size={ sizescale } margin={ margin } /> }
+        // foregroundGraphics={ <Legend color={ colorscale } size={ sizescale } margin={ margin } /> }
         hoverAnnotation={ [(d) => ({
           type: 'frame-hover',
           color: colorscale(d.level)
@@ -54,6 +54,15 @@ const Scatterplot = (props) => {
             numFmt={ fmt }
           />
         ) }
+      />
+      <Legend
+        type='ordinal'
+        scale={ colorscale }
+        labelFormat={ (d) => titleLabel(d) }
+        style={{
+          right: '4px',
+          bottom: '45px'
+        }}
       />
     </div>
   )

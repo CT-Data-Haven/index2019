@@ -1,21 +1,27 @@
 import React from 'react';
-import { titleLabel } from './utils.js';
+import { LegendThreshold, LegendOrdinal } from '@vx/legend';
+import { fmt } from './utils.js';
 
 import '../styles/Legend.css';
 
-const Legend = ({ color, size, margin }) => {
+const legendTypes = {
+  threshold: LegendThreshold,
+  ordinal: LegendOrdinal
+};
+
+const Legend = (props) => {
+  const LegendByType = legendTypes[props.type];
+  const format = props.labelFormat || ((label) => label ? fmt(props.format)(label) : '');
   return (
-    <g className='Legend' id='legend' transform={ `translate(${ margin.left + 10 },${ margin.top + 10 })` }>
-      { color.domain().map((d, i) => (
-        <g key={ `legendline-${ i }` } transform={ `translate(0,${ i * 15 })` }>
-          <circle fill={ color(d) } cx='0' cy='0' r={ size(d) - 1 } />
-          <text key={ `legendtxt-${ i }` } dx='0.6em' dy='0.28em'>
-            { titleLabel(d) }
-          </text>
-        </g>
-      )) }
-    </g>
+    <div className='Legend' style={ props.style }>
+      <LegendByType
+        labelFormat={ format }
+        scale={ props.scale }
+      />
+    </div>
   );
 };
+
+
 
 export default Legend;
