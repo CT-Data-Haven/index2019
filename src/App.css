@@ -30,3 +30,7 @@
 .App .alert-light {
   color: #2d2d2e;
 }
+
+.App .alert strong {
+  font-weight: 600;
+}
