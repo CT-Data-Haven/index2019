@@ -5,17 +5,17 @@ import useForm, { FormContext } from 'react-hook-form';
 
 import Stage from './Stage';
 import { QBarChart } from './BarChart';
-import { SurveyMainControls, SurveyProfileControls } from './Controls';
+import { ControlHolder, SurveyMainControls, GroupControls } from './Controls';
 import Intro from './Intro';
 import Profile from './Profile';
 import { cleanHdrLabels, getQMeta, getProfile, getNestedGrps, fmt } from '../components/utils.js';
 
-const Survey = ({ cws_data, meta, intro }) => {
+const Survey = ({ data, meta, intro }) => {
   const formMethods = useForm({
     mode: 'onChange'
   });
   const topics = Object.keys(meta);
-  const regions = Object.keys(cws_data);
+  const regions = Object.keys(data);
 
   const initValues = {
     region: regions[0],
@@ -32,28 +32,27 @@ const Survey = ({ cws_data, meta, intro }) => {
 
 // event handling
   const onChange = (data, e) => {
-    const { regSelect, topicSelect, qSelect, grpSelect } = formMethods.getValues();
+    const { _region, _topic, _indicator, _group } = formMethods.getValues();
 
     // don't like setting state like this but oh well
-    const q0 = meta[topicSelect][0].indicator;
+    const q0 = meta[_topic][0].indicator;
     const g0 = initValues.group;
-    if (e.target.name === 'topicSelect' || e.target.name === 'regSelect') {
-      formMethods.setValue('qSelect', q0);
-      formMethods.setValue('grpSelect', g0);
+    if (e.target.name === '_topic' || e.target.name === '_region') {
+      formMethods.setValue('_indicator', q0);
+      formMethods.setValue('_group', g0);
       setIndicator(q0);
       setGroup(g0);
     } else {
-      setIndicator(qSelect);
-      setGroup(grpSelect);
+      setIndicator(_indicator);
+      setGroup(_group);
     }
-    setRegion(regSelect);
-    setTopic(topicSelect);
-
+    setRegion(_region);
+    setTopic(_topic);
   };
 
   const qDisplay = getQMeta(meta[topic], indicator) || '';
-  const groups = getNestedGrps(cws_data[region][topic]);
-  const profileData = getProfile(cws_data[region][topic], 'group', group, meta[topic]);
+  const groups = getNestedGrps(data[region][topic]);
+  const profileData = getProfile(data[region][topic], 'group', group, meta[topic]);
 
   return (
     <div className='Dash Survey'>
@@ -68,12 +67,14 @@ const Survey = ({ cws_data, meta, intro }) => {
         <Row className=''>
           <Col md={ 6 }>
             <FormContext { ...formMethods }>
-              <SurveyMainControls
-                onChange={ formMethods.handleSubmit(onChange) }
-                topics={ topics }
-                regions={ regions }
-                topicMeta={ meta[topic] }
-              />
+              <ControlHolder>
+                <SurveyMainControls
+                  onChange={ formMethods.handleSubmit(onChange) }
+                  topics={ topics }
+                  regions={ regions }
+                  meta={ meta[topic] }
+                />
+              </ControlHolder>
             </FormContext>
           </Col>
           <Col md={ 6 }>
@@ -92,8 +93,8 @@ const Survey = ({ cws_data, meta, intro }) => {
               axisLbl={ qDisplay.denom }
             >
               <QBarChart
-                data={ cws_data[region][topic] }
-                vs={ [indicator] }
+                data={ data[region][topic] }
+                rAccess={ indicator }
                 numFmt={ fmt('0.0%') }
               />
             </Stage>
@@ -101,11 +102,13 @@ const Survey = ({ cws_data, meta, intro }) => {
 
           <Col md={ 6 } className='second'>
             <FormContext { ...formMethods }>
-              <SurveyProfileControls
-                onChange={ formMethods.handleSubmit(onChange) }
-                groups={ groups }
-                topicMeta={ meta[topic] }
-              />
+              <ControlHolder>
+                <GroupControls
+                  onChange={ formMethods.handleSubmit(onChange) }
+                  groups={ groups }
+                  meta={ meta[topic] }
+                />
+              </ControlHolder>
             </FormContext>
             { /* profile */ }
             <Stage
@@ -113,13 +116,11 @@ const Survey = ({ cws_data, meta, intro }) => {
               lbl={ cleanHdrLabels(topic) }
               grouping={ region }
               dataBy={ group }
-              axisLbl={ 'Share of adults' }
+              axisLbl={ qDisplay.denom }
               flush
             >
               <Profile
                 data={ profileData }
-                topic={ topic }
-                meta={ meta[topic] }
                 cols={ ['Survey question', 'Value'] }
               />
             </Stage>

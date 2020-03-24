@@ -51,27 +51,50 @@ const fmt = (fmtStr) => (
 );
 
 /////////////// data munging
-// const getProfile = (data, filterBy, filterVal, meta) => (
-//   _.chain(data)
-//     .find((d) => d.group === group)
-//     .omit(['category', 'group'])
-//     .toPairs()
-//     .map((d) => ({ indicator: d[0], display: getQMeta(meta, d[0]).display, value: d[1] }) )
-//     .orderBy('display')
-//     .value()
-// );
 
-const getProfile = (data, filterBy, filterVal, meta, omit = null) => {
-  const profData = _filterByKey(data, filterBy, filterVal, true);
-  const wide = _.map(meta, (m) => {
+const getProfile = (data, filterBy, filterVal, meta, omit = null, variable = 'indicator', compareCt = false) => {
+  let profData;
+  if (compareCt) {
+    profData = _.filter(data, (d) => d[filterBy] === filterVal || d.level === 'state');
+  } else {
+    profData = _filterByKey(data, filterBy, filterVal, true);
+  }
+  if (profData.length === 0) {
+    return [];
+  } else {
+    const wide = _.map(meta, (m) => {
     const format = m.format || '0.0%';
-    const val = fmt(format)(profData[m.indicator]);
+    const val = fmt(format)(profData[m[variable]]);
     return {
       indicator: m.display,
       value: val
     };
   });
   return wide;
+  }
+  // const profData = _filterByKey(data, filterBy, filterVal, true);
+
+};
+
+const getGrpProfile = (data, filterBy, filterVal, meta, indicator, omit = null) => {
+  const filtered = _.mapValues(data, (d) => _filterByKey(d, filterBy, filterVal, true));
+
+  const nestedProf = _.chain(meta)
+    .mapValues((m) => _filterByKey(m, 'indicator', indicator, true))
+    .mapValues((m, age) => {
+      const k = m.indicator;
+      const ageData = filtered[age] || { [filterBy]: filterVal, [k]: undefined };
+      const format = m.format || ',d';
+      const val = fmt(format)(ageData[k]);
+
+      return {
+        indicator: age,
+        value: val
+      };
+    })
+    .toArray()
+    .value();
+  return nestedProf;
 };
 
 const filterForScatter = (data) => (
@@ -93,15 +116,23 @@ const filterForBar = (data, region, variable) => {
   return out;
 };
 
-const getMapData = (data, indicator) => (
-  _.chain(data)
-    .map((d) => ({
-      name: d.name,
-      value: d[indicator]
-    }))
-    .keyBy('name')
-    .value()
-);
+const getMapData = (data, indicator) => {
+  let vals;
+  if (data[0].level) {
+    vals = _filterByKey(data, 'level', 'town', false);
+  } else {
+    vals = data;
+  }
+  return (
+    _.chain(vals)
+      .map((d) => ({
+        name: d.name,
+        value: d[indicator]
+      }))
+      .keyBy('name')
+      .value()
+  );
+}
 
 const filterTownLvl = (data) => (
   _.chain(data)
@@ -214,12 +245,14 @@ const makeChoroScale = (data, scheme, nBrks) => {
   const vals = _.chain(data)
     .mapValues('value')
     .values()
+    .compact()
     .sort()
     .value();
   if (!vals.length) {
     return scaleThreshold().domain([0, 1]).range(['#ccc']);
   } else {
     const brks = ckmeans(vals, nBrks).map((d) => d[0]).slice(1);
+
     return scaleThreshold()
       .domain(brks)
       .range(scheme[nBrks]);
@@ -256,6 +289,7 @@ export{
   fmt,
   getBounds,
   getComparables,
+  getGrpProfile,
   getMapData,
   getMaxes,
   getNestedGrps,

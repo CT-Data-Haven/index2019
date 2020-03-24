@@ -4,10 +4,12 @@ import { objToArray, filterByString, filterTownLvl } from './components/utils.js
 
 import './App.css';
 
-import Header from './components/Header';
 import Scores from './components/Scores';
 import Survey from './components/Survey';
 import Risks from './components/Risks';
+import Chime from './components/Chime';
+
+import Header from './components/Header';
 import Footer from './components/Footer';
 import { NoteContext } from './components/NoteContext.js';
 
@@ -18,18 +20,21 @@ import score_meta from './data/score_meta.json';
 // to survey
 import cws_data from './data/cws_indicators.json';
 import cws_meta from './data/cws_meta.json';
-import dl_meta from './data/downloads.json';
 // to risk by town
 import town_data from './data/cws_health_by_town.json';
 import town_topo from './data/town_topo.json';
+// to chime
+import chime_data from './data/chime_data.json';
+import chime_meta from './data/chime_meta.json';
 // intros
 import intro_txt from './data/intro_text.json';
-
+import dl_meta from './data/downloads.json';
 
 const hdrs = {
   survey: 'Wellbeing indicators',
   risks: 'Health risks by town',
-  scores: 'Index scores'
+  scores: 'Index scores',
+  chime: 'Hospital encounters'
 };
 
 const useDownload = () => {
@@ -58,7 +63,7 @@ const App = () => {
         <Route exact path='/survey'>
           <NoteContext.Provider value={ { noteOpen, handleClose } }>
             <Survey
-              cws_data={ cws_data }
+              data={ cws_data }
               meta={ cws_meta }
               intro={ intro_txt }
             />
@@ -67,7 +72,7 @@ const App = () => {
         <Route exact path='/risks'>
           <NoteContext.Provider value={ { noteOpen, handleClose } }>
             <Risks
-              town_data={ town_data }
+              data={ town_data }
               meta={ filterTownLvl(filterByString(cws_meta, 'health')) }
               shape={ town_topo }
               intro={ intro_txt }
@@ -77,15 +82,25 @@ const App = () => {
         <Route exact path='/scores'>
           <NoteContext.Provider value={ { noteOpen, handleClose } }>
             <Scores
-              index_data={ index_data }
+              data={ index_data }
               index_comps={ index_comps }
               meta={ score_meta }
               intro={ intro_txt }
             />
           </NoteContext.Provider>
         </Route>
+        <Route exact path='/chime'>
+          <NoteContext.Provider value={ { noteOpen, handleClose } }>
+            <Chime
+              data={ chime_data }
+              meta={ chime_meta }
+              shape={ town_topo }
+              intro={ intro_txt }
+            />
+          </NoteContext.Provider>
+        </Route>
       </Switch>
-      { download.location.length ? <Footer { ...download } /> : null }
+      { download.location ? <Footer { ...download } /> : null }
 
     </div>
   );

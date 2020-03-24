@@ -55,15 +55,15 @@ const BarChart = (props) => {
 
 
 const IdxBarChart = (props) => {
-  const rAccess = props.vs[0];
-  const oAccess = rAccess === 'community' ? 'name': 'group';
-  const colorVar = rAccess === 'community' ? 'level' : 'category';
+  // const rAccess = props.v1;
+  const oAccess = props.rAccess === 'community' ? 'name': 'group';
+  const colorVar = props.rAccess === 'community' ? 'level' : 'category';
 
   return (
     <BarChart
       data={ props.data }
       oAccess={ oAccess }
-      rAccess={ rAccess }
+      rAccess={ props.rAccess }
       colorVar={ colorVar }
     />
   );
@@ -74,7 +74,7 @@ const QBarChart = (props) => {
     <BarChart
       data={ props.data }
       oAccess={ 'group' }
-      rAccess={ props.vs[0] }
+      rAccess={ props.rAccess }
       colorVar={ 'category' }
       numFmt={ props.numFmt }
     />

@@ -6,7 +6,7 @@ import useForm, { FormContext } from 'react-hook-form';
 import Stage from './Stage';
 import Scatterplot from './Scatterplot';
 import { IdxBarChart } from './BarChart';
-import { ScoreMainControls, ScoreCompareControls, SparkControls } from './Controls';
+import { ControlHolder, ScoreMainControls, ScoreCompareControls, SparkControls } from './Controls';
 import Intro from './Intro';
 import DataTable from './DataTable';
 import { getVariables, getRegions, filterForScatter, filterForBar, cleanIdxLabels } from '../components/utils.js';
@@ -14,11 +14,11 @@ import { getVariables, getRegions, filterForScatter, filterForBar, cleanIdxLabel
 import '../styles/Dash.css';
 
 
-const Scores = ({ index_data, index_comps, meta, intro }) => {
+const Scores = ({ data, index_comps, meta, intro }) => {
   const formMethods = useForm({
     mode: 'onChange'
   });
-  const variables = getVariables(index_data);
+  const variables = getVariables(data);
   const initValues = {
     v1: variables[0],
     v2: variables[1],
@@ -33,11 +33,12 @@ const Scores = ({ index_data, index_comps, meta, intro }) => {
 
 // event handling
   const onFormChange = (data, e) => {
-    const { v1Select, v2Select, regSelect } = formMethods.getValues();
-    setV1(v1Select);
-    setV2(v2Select);
-    setRegion(regSelect);
+    const { _v1, _v2, _region } = formMethods.getValues();
+    setV1(_v1);
+    setV2(_v2);
+    setRegion(_region);
   };
+
   const onToggleChange = (e) => {
     setSpark(e.target.checked);
   };
@@ -57,12 +58,14 @@ const Scores = ({ index_data, index_comps, meta, intro }) => {
         <Row className='align-items-end'>
           <Col md={ 6 }>
             <FormContext { ...formMethods }>
-              <ScoreMainControls
-                onChange={ formMethods.handleSubmit(onFormChange) }
-                variables={ variables }
-                regions={ getRegions(index_data) }
-                v1={ v1 }
-              />
+              <ControlHolder>
+                <ScoreMainControls
+                  onChange={ formMethods.handleSubmit(onFormChange) }
+                  variables={ variables }
+                  regions={ getRegions(data) }
+                  // v1={ v1 }
+                />
+              </ControlHolder>
             </FormContext>
 
             { /* bar chart */ }
@@ -74,20 +77,22 @@ const Scores = ({ index_data, index_comps, meta, intro }) => {
               axisLbl={ 'Scores 0 (worse) through 1,000 (better)' }
             >
               <IdxBarChart
-                data={ filterForBar(index_data, region, v1) }
-                vs={ [v1] }
+                data={ filterForBar(data, region, v1) }
+                rAccess={ v1 }
               />
             </Stage>
           </Col>
 
           <Col md={ 6 } className='second'>
             <FormContext { ...formMethods }>
-              <ScoreCompareControls
-                onChange={ formMethods.handleSubmit(onFormChange) }
-                variables={ variables }
-                v1={ v1 }
-                v2={ v2 }
-              />
+              <ControlHolder>
+                <ScoreCompareControls
+                  onChange={ formMethods.handleSubmit(onFormChange) }
+                  variables={ variables }
+                  v1={ v1 }
+                  v2={ v2 }
+                />
+              </ControlHolder>
             </FormContext>
 
             { /* scatterplot */ }
@@ -97,7 +102,7 @@ const Scores = ({ index_data, index_comps, meta, intro }) => {
               axisLbl={ 'Scores 0 (worse) through 1,000 (better)' }
             >
               <Scatterplot
-                data={ filterForScatter(index_data, region) }
+                data={ filterForScatter(data, region) }
                 vs={ [v1, v2] }
               />
             </Stage>

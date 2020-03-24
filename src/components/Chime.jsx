@@ -5,68 +5,62 @@ import useForm, { FormContext } from 'react-hook-form';
 import { schemeBuPu as palette } from 'd3-scale-chromatic';
 
 import Stage from './Stage';
-import { ControlHolder, RiskMainControls } from './Controls';
+import { ControlHolder, ChimeMainControls } from './Controls';
 import Intro from './Intro';
 import Choropleth from './Choropleth';
 import Profile from './Profile';
 
-import { getQMeta, getMapData, makeChoroScale, cleanHdrLabels, getProfile } from './utils.js';
+import { getQMeta, getMapData, makeChoroScale, cleanHdrLabels, getGrpProfile } from './utils.js';
 
-const Risks = ({ data, meta, shape, intro }) => {
+const Chime = ({ data, meta, shape, intro }) => {
   const formMethods = useForm({
     mode: 'onChange'
   });
-  const topics = Object.keys(meta);
+  const ages = Object.keys(meta);
   const initValues = {
-    topic: topics[0],
-    indicator: meta[topics[0]][0].indicator
+    indicator: meta[ages[0]][0].indicator,
+    age: ages[0]
   };
 
-  const towns = Object.keys(getMapData(data[initValues.topic], initValues.indicator));
-  // const towns = Object.keys(data[initValues.indicator][0]);
-  const [topic, setTopic] = useState(initValues.topic);
+  const towns = Object.keys(getMapData(data[initValues.age], initValues.indicator));
+  const [age, setAge] = useState(initValues.age);
   const [indicator, setIndicator] = useState(initValues.indicator);
   const [town, setTown] = useState(towns[0]);
+  // const [view, setView] = useState(initValues.view);
 
   const onChange = (data, e) => {
-    const { _topic, _indicator } = formMethods.getValues();
-    const q0 = meta[_topic][0].indicator;
-    if (e.target.name === '_topic') {
-      formMethods.setValue('_indicator', q0);
-      setIndicator(q0);
-    } else {
-      setIndicator(_indicator);
-    }
-    setTopic(_topic);
+    const { _age, _indicator } = formMethods.getValues();
+    setIndicator(_indicator);
+    setAge(_age);
   };
 
   const onFeatureClick = ({ layer }) => {
     setTown(layer.feature.properties.name);
   };
 
-  const qDisplay = getQMeta(meta[topic], indicator) || '';
-  const mapData = getMapData(data[topic], indicator);
-  const profileData = getProfile(data[topic], 'name', town, meta[topic]);
+  const mapData = getMapData(data[age], indicator);
+  const profileData = getGrpProfile(data, 'name', town, meta, indicator, null);
+  const qDisplay = getQMeta(meta[age], indicator) || '';
 
   return (
-    <div className='Dash Risks'>
+    <div className='Dash Chime'>
       <Container>
         <header className='App-header'>
-          <h1>2018 Community Wellbeing Survey</h1>
+          <h1>CHIME hospital data</h1>
         </header>
 
         <Row>
-          <Intro page='risks' intro={ intro } />
+          <Intro page='chime' intro={ intro } />
         </Row>
 
         <Row>
           <Col md={ 6 }>
             <FormContext { ...formMethods }>
               <ControlHolder>
-                <RiskMainControls
+                <ChimeMainControls
                   onChange={ formMethods.handleSubmit(onChange) }
-                  topics={ topics }
-                  indicators={ meta[topic] }
+                  ages={ ages }
+                  indicators={ meta[age] }
                 />
               </ControlHolder>
             </FormContext>
@@ -76,32 +70,35 @@ const Risks = ({ data, meta, shape, intro }) => {
         <Row>
           <Col md={ 6 }>
             <Stage
-              type='lblBy'
-              lbl={ qDisplay.display }
+              type='lblBy2'
+              lbl={ qDisplay.display + ' hospital encounters' }
               dataBy={ 'town' }
-              axisLbl={ qDisplay.denom }
+              grouping={ age.toLowerCase() }
+              axisLbl={ 'Rate per 10,000 residents' }
               flush
             >
               <Choropleth
                 data={ mapData }
                 shape={ shape }
                 colorscale={ makeChoroScale(mapData, palette, 5) }
-                meta={ { format: '.0%' } }
+                meta={ { format: ',d' } }
                 onClick={ onFeatureClick }
               />
             </Stage>
           </Col>
           <Col md={ 6 } className='second'>
             <Stage
-              type='comma'
-              lbl={ cleanHdrLabels(topic) }
+              type='lblBy2'
+              lbl={ qDisplay.display + ' encounters' }
+              dataBy={ 'age' }
               grouping={ town }
-              axisLbl={ qDisplay.denom }
+              axisLbl={ 'Rate per 10,000 residents' }
               flush
             >
               <Profile
                 data={ profileData }
-                cols={ [ 'Survey question', 'Value' ] }
+                meta={ meta[age] }
+                cols={ ['Condition', 'Rate'] }
               />
             </Stage>
           </Col>
@@ -111,4 +108,4 @@ const Risks = ({ data, meta, shape, intro }) => {
   )
 };
 
-export default Risks;
+export default Chime;
