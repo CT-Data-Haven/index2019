@@ -1,3 +1,13 @@
 .Intro {
 
 }
+
+.Intro .alert-warning {
+  color: #4e4731;
+}
+
+.Intro .alert-heading .close {
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.2;
+}

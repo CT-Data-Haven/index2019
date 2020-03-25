@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import { objToArray, filterByString, filterTownLvl } from './components/utils.js';
+import Dash from './components/Dash';
 
 import './App.css';
 
-import Scores from './components/Scores';
-import Survey from './components/Survey';
-import Risks from './components/Risks';
-import Chime from './components/Chime';
+import Scores from './pages/Scores';
+import Survey from './pages/Survey';
+import Risks from './pages/Risks';
+import Chime from './pages/Chime';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -51,57 +52,52 @@ const App = () => {
   const download = useDownload();
   const [noteOpen, setNoteOpen] = useState(true);
   const handleClose = () => {
-    setNoteOpen(false);
+    setNoteOpen(!noteOpen);
   };
 
   return (
     <div className="App">
       <Header hdrs={ objToArray(hdrs, 'location', 'title') } />
 
-      <Switch>
-        <Route exact path='/' render={ () => <Redirect to='/survey' /> } />
-        <Route exact path='/survey'>
-          <NoteContext.Provider value={ { noteOpen, handleClose } }>
-            <Survey
-              data={ cws_data }
-              meta={ cws_meta }
-              intro={ intro_txt }
-            />
-          </NoteContext.Provider>
-        </Route>
-        <Route exact path='/risks'>
-          <NoteContext.Provider value={ { noteOpen, handleClose } }>
-            <Risks
-              data={ town_data }
-              meta={ filterTownLvl(filterByString(cws_meta, 'health')) }
-              shape={ town_topo }
-              intro={ intro_txt }
-            />
-          </NoteContext.Provider>
-        </Route>
-        <Route exact path='/scores'>
-          <NoteContext.Provider value={ { noteOpen, handleClose } }>
-            <Scores
-              data={ index_data }
-              index_comps={ index_comps }
-              meta={ score_meta }
-              intro={ intro_txt }
-            />
-          </NoteContext.Provider>
-        </Route>
-        <Route exact path='/chime'>
-          <NoteContext.Provider value={ { noteOpen, handleClose } }>
-            <Chime
-              data={ chime_data }
-              meta={ chime_meta }
-              shape={ town_topo }
-              intro={ intro_txt }
-            />
-          </NoteContext.Provider>
-        </Route>
-      </Switch>
-      { download.location ? <Footer { ...download } /> : null }
+      <NoteContext.Provider value={ { noteOpen, handleClose } }>
 
+        <Dash
+          intro={ intro_txt[download.location] }
+          note={ intro_txt['covid'] }
+          download={ download }
+        >
+          <Switch>
+            <Route exact path='/' render={ () => <Redirect to='/survey' /> } />
+            <Route exact path='/survey'>
+              <Survey
+                data={ cws_data }
+                meta={ cws_meta }
+              />
+            </Route>
+            <Route exact path='/risks'>
+              <Risks
+                data={ town_data }
+                meta={ filterTownLvl(filterByString(cws_meta, 'health')) }
+                shape={ town_topo }
+              />
+            </Route>
+            <Route exact path='/scores'>
+              <Scores
+                data={ index_data }
+                index_comps={ index_comps }
+                meta={ score_meta }
+              />
+            </Route>
+            <Route exact path='/chime'>
+              <Chime
+                data={ chime_data }
+                meta={ chime_meta }
+                shape={ town_topo }
+              />
+            </Route>
+          </Switch>
+        </Dash>
+      </NoteContext.Provider>
     </div>
   );
 };
