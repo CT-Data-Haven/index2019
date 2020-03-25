@@ -1,6 +1,6 @@
 import React from 'react';
 import { LegendThreshold, LegendOrdinal } from '@vx/legend';
-import { fmt } from './utils.js';
+import { fmt } from '../utils/utils.js';
 
 import '../styles/Legend.css';
 

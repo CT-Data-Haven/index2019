@@ -1,6 +1,6 @@
 import React from 'react';
 import { Map, TileLayer, GeoJSON } from 'react-leaflet';
-import { getBounds, makeGeoJson, makeTooltip } from './utils.js';
+import { getBounds, makeGeoJson, makeTooltip } from '../utils/utils.js';
 import Legend from './Legend';
 
 import '../styles/Chart.css';

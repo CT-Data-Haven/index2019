@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert, Button, Collapse } from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
-import { NoteContext } from './NoteContext.js';
+import { NoteContext } from '../utils/NoteContext.js';
 
 import '../styles/Intro.css';
 

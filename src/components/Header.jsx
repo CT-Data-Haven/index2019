@@ -6,7 +6,7 @@ import '../styles/Header.css';
 
 const Header = (props) => (
   <div className='Header'>
-    <Navbar expand='md' variant='light' bg='light'>
+    <Navbar expand='md' variant='light'  fixed='top'>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav variant='pills'>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
-import { objToArray, filterByString, filterTownLvl } from './components/utils.js';
+import { objToArray, filterByString, filterTownLvl } from './utils/utils.js';
 import Dash from './components/Dash';
 
 import './App.css';
@@ -12,7 +12,7 @@ import Chime from './pages/Chime';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
-import { NoteContext } from './components/NoteContext.js';
+import { NoteContext } from './utils/NoteContext.js';
 
 // to scores
 import index_data from './data/index_scatterplot.json';

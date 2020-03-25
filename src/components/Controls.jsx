@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Form, Col, Row } from 'react-bootstrap';
 import { useFormContext } from 'react-hook-form';
-import { cleanIdxLabels, cleanHdrLabels, getComparables } from './utils.js';
+import { cleanIdxLabels, cleanHdrLabels, getComparables } from '../utils/utils.js';
 
 import '../styles/Controls.css';
 

@@ -1,17 +1,17 @@
 import React from 'react';
 import { ResponsiveXYFrame } from 'semiotic';
-import { Vivid } from 'cartocolor';
+import { Vivid as palette } from 'cartocolor';
 import * as _ from 'lodash';
 
 import Legend from './Legend';
 import Tip from './Tip';
 import '../styles/Chart.css';
 
-import { cleanIdxLabels, createScales, titleLabel } from './utils.js';
+import { cleanIdxLabels, createScales, titleLabel } from '../utils/utils.js';
 
 const Scatterplot = (props) => {
   const [xAccess, yAccess] = props.vs;
-  const { colorscale, sizescale } = createScales(props.data, Vivid, 'level', false);
+  const { colorscale, sizescale } = createScales(props.data, palette, 'level', false);
 
   const xRange = [_.min(_.map(props.data, xAccess)), _.max(_.map(props.data, xAccess))];
   const yRange = [_.min(_.map(props.data, yAccess)), _.max(_.map(props.data, yAccess))];

@@ -1,7 +1,7 @@
 import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 
-import { cleanHdrLabels, tblColumns, fmt, getMaxes } from './utils.js';
+import { cleanHdrLabels, tblColumns, fmt, getMaxes } from '../utils/utils.js';
 
 import '../styles/DataTable.css';
 

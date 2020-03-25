@@ -1,13 +1,13 @@
 import React from 'react';
 import { ResponsiveOrdinalFrame } from 'semiotic';
-import { Vivid } from 'cartocolor';
+import { Vivid as palette } from 'cartocolor';
 
 import '../styles/Chart.css';
 
-import { createScales } from './utils.js';
+import { createScales } from '../utils/utils.js';
 
 const BarChart = (props) => {
-  const { colorscale } = createScales(props.data, Vivid, props.colorVar, props.colorVar === 'category');
+  const { colorscale } = createScales(props.data, palette, props.colorVar, props.colorVar === 'category');
   const fmt = props.numFmt || ((d) => d);
 
   const labels = props.data.map((d) => ({
