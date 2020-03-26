@@ -4,9 +4,10 @@ import { Vivid as palette } from 'cartocolor';
 
 import '../styles/Chart.css';
 
-import { createScales } from '../utils/utils.js';
+import { createScales, fillMissing } from '../utils/utils.js';
 
 const BarChart = (props) => {
+  fillMissing(props.data, props.rAccess);
   const { colorscale } = createScales(props.data, palette, props.colorVar, props.colorVar === 'category');
   const fmt = props.numFmt || ((d) => d);
 
@@ -16,6 +17,7 @@ const BarChart = (props) => {
     [props.rAccess]: d[props.rAccess],
     type: 'bar-label'
   }));
+  // console.log(fillMissing(props.data, props.rAccess));
 
   return (
     <div className='Chart'>
@@ -34,7 +36,7 @@ const BarChart = (props) => {
           strokeWidth: '1px',
           opacity: 0.8
         }) }
-
+        renderKey={ (d, i) => i }
         annotations={ labels }
         svgAnnotationRules={ (d) => lblRules(d, props.oAccess, props.rAccess, fmt) }
         responsiveWidth={ true }

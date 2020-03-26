@@ -13,7 +13,6 @@ const DataTable = ({ data, v1, meta, spark, sort }) => {
   // colnames of what will be displayed
   const colNames = tblColumns(data[0], omit);
   const maxes = getMaxes(data);
-  console.log(meta, colNames);
 
   const cols = colNames.map((col, i) => {
     let formatter;

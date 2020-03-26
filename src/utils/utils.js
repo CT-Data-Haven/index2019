@@ -116,6 +116,15 @@ const filterForBar = (data, region, variable) => {
   return out;
 };
 
+const fillMissing = (data, variable) => (
+  _.map(data, (d) => {
+    if (_.keys(d).indexOf(variable) === -1) {
+      d[variable] = null;
+    }
+    return d;
+  })
+);
+
 const getMapData = (data, indicator) => {
   let vals;
   if (data[0].level) {
@@ -283,6 +292,7 @@ export{
 	getVariables,
   cleanHdrLabels,
   cleanKeys,
+  fillMissing,
   filterByString,
   filterForBar,
   filterTownLvl,
