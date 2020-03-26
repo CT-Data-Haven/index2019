@@ -13,15 +13,16 @@ const DataTable = ({ data, v1, meta, spark, sort }) => {
   // colnames of what will be displayed
   const colNames = tblColumns(data[0], omit);
   const maxes = getMaxes(data);
+  console.log(meta, colNames);
 
   const cols = colNames.map((col, i) => {
     let formatter;
     const isNumber = meta[col] !== undefined;
     if (isNumber) {
       if (spark) {
-        formatter = makeSpark(meta[col], col, maxes);
+        formatter = makeSpark(meta[col].format, col, maxes);
       } else {
-        formatter = fmt(meta[col]);
+        formatter = fmt(meta[col].format);
       }
     } else {
       formatter = null;

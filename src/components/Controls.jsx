@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Form, Col, Row } from 'react-bootstrap';
 import { useFormContext } from 'react-hook-form';
 import { cleanIdxLabels, cleanHdrLabels, getComparables } from '../utils/utils.js';

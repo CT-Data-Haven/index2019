@@ -113,7 +113,8 @@ const Scores = ({ data, index_comps, meta, intro }) => {
             flush
             hdrComponents={ <SparkControls checked={ spark } onChange={ onToggleChange } /> }
           >
-            <DataTable v1={ v1 } meta={ meta[v1] }
+            <DataTable v1={ v1 }
+              meta={ meta[v1] }
               data={ filterForBar(index_comps[v1], region, v1) }
               spark={ spark }
               sort={ true }

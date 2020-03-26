@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 
-import { Container, Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import useForm, { FormContext } from 'react-hook-form';
 import { schemeBuPu as palette } from 'd3-scale-chromatic';
 
 import Stage from '../components/Stage';
 import { ControlHolder, ChimeMainControls } from '../components/Controls';
-import Intro from '../components/Intro';
 import Choropleth from '../components/Choropleth';
 import Profile from '../components/Profile';
 
-import { getQMeta, getMapData, makeChoroScale, cleanHdrLabels, getGrpProfile } from '../utils/utils.js';
+import { getQMeta, getMapData, makeChoroScale, getGrpProfile } from '../utils/utils.js';
 
 const Chime = ({ data, meta, shape, intro }) => {
   const formMethods = useForm({

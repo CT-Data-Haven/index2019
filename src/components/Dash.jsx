@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import Intro from './Intro';
 import Footer from './Footer';
 
@@ -12,7 +12,7 @@ const Dash = (props) => (
         <h1>Connecticut Wellbeing and Equity Data App</h1>
         <h2>{ props.intro.headline }</h2>
       </header>
-      <Intro note={ props.note.text } { ...props.intro } />
+      <Intro note={ props.note } { ...props.intro } />
 
       { props.children }
 

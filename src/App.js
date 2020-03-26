@@ -11,25 +11,28 @@ import Risks from './pages/Risks';
 import Chime from './pages/Chime';
 
 import Header from './components/Header';
-import Footer from './components/Footer';
 import { NoteContext } from './utils/NoteContext.js';
 
-// to scores
-import index_data from './data/index_scatterplot.json';
-import index_comps from './data/index_components.json';
-import score_meta from './data/score_meta.json';
-// to survey
-import cws_data from './data/cws_indicators.json';
-import cws_meta from './data/cws_meta.json';
-// to risk by town
-import town_data from './data/cws_health_by_town.json';
+import data from './data/dash_data.json';
+import meta from './data/meta.json';
+import page_meta from './data/page_meta.json';
 import town_topo from './data/town_topo.json';
-// to chime
-import chime_data from './data/chime_data.json';
-import chime_meta from './data/chime_meta.json';
-// intros
-import intro_txt from './data/intro_text.json';
-import dl_meta from './data/downloads.json';
+// // to scores
+// import index_data from './data/index_scatterplot.json';
+// import index_comps from './data/index_components.json';
+// import score_meta from './data/score_meta.json';
+// // to survey
+// import cws_data from './data/cws_indicators.json';
+// import cws_meta from './data/cws_meta.json';
+// // to risk by town
+// import town_data from './data/cws_health_by_town.json';
+// import town_topo from './data/town_topo.json';
+// // to chime
+// import chime_data from './data/chime_data.json';
+// import chime_meta from './data/chime_meta.json';
+// // intros
+// import intro_txt from './data/intro_text.json';
+// import dl_meta from './data/downloads.json';
 
 const hdrs = {
   survey: 'Wellbeing indicators',
@@ -42,7 +45,7 @@ const useDownload = () => {
   const location = useLocation().pathname.substring(1);
   return {
     location: location,
-    urls: dl_meta[location],
+    urls: page_meta[location].download,
     dw: 'https://data.world/camille86/cws2018',
     display: hdrs[location]
   };
@@ -54,7 +57,8 @@ const App = () => {
   const handleClose = () => {
     setNoteOpen(!noteOpen);
   };
-
+// [1] "chime_data"         "cws_health_by_town" "cws_indicators"     "index_components"
+// [5] "index_scatterplot"  "sbass"
   return (
     <div className="App">
       <Header hdrs={ objToArray(hdrs, 'location', 'title') } />
@@ -62,36 +66,36 @@ const App = () => {
       <NoteContext.Provider value={ { noteOpen, handleClose } }>
 
         <Dash
-          intro={ intro_txt[download.location] }
-          note={ intro_txt['covid'] }
+          intro={ page_meta[download.location].intro }
+          note={ page_meta['covid'].intro.text }
           download={ download }
         >
           <Switch>
             <Route exact path='/' render={ () => <Redirect to='/survey' /> } />
             <Route exact path='/survey'>
               <Survey
-                data={ cws_data }
-                meta={ cws_meta }
+                data={ data['cws_indicators'] }
+                meta={ meta['cws'] }
               />
             </Route>
             <Route exact path='/risks'>
               <Risks
-                data={ town_data }
-                meta={ filterTownLvl(filterByString(cws_meta, 'health')) }
+                data={ data['cws_health_by_town'] }
+                meta={ filterTownLvl(filterByString(meta['cws'], 'health')) }
                 shape={ town_topo }
               />
             </Route>
             <Route exact path='/scores'>
               <Scores
-                data={ index_data }
-                index_comps={ index_comps }
-                meta={ score_meta }
+                data={ data['index_scatterplot'] }
+                index_comps={ data['index_components'] }
+                meta={ meta['score'] }
               />
             </Route>
             <Route exact path='/chime'>
               <Chime
-                data={ chime_data }
-                meta={ chime_meta }
+                data={ data['chime_data'] }
+                meta={ meta['chime'] }
                 shape={ town_topo }
               />
             </Route>

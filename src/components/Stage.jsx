@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 
 import '../styles/Stage.css';
-import { cleanHdrLabels, compileHeader } from '../utils/utils.js';
+import { compileHeader } from '../utils/utils.js';
 
 const Stage = (props) => {
   const hdr = compileHeader(props.type)({ ...props });
