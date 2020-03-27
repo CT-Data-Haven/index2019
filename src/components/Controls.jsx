@@ -155,4 +155,22 @@ const ChimeMainControls = (props) => (
   </React.Fragment>
 );
 
-export { ScoreMainControls, ScoreCompareControls, SurveyMainControls, GroupControls, SparkControls, RiskMainControls, ChimeMainControls, ControlHolder };
+const InternetMainControls = (props) => (
+  <React.Fragment>
+    { /* indicator */ }
+    <Ctrl name='_indicator'
+      keys={ props.indicators.map((d) => ({ value: d.indicator, display: d.display })) }
+      onChange={ props.onChange }
+    />
+  </React.Fragment>
+);
+
+export {
+  ScoreMainControls, ScoreCompareControls,
+  SurveyMainControls, GroupControls,
+  SparkControls,
+  RiskMainControls,
+  ChimeMainControls,
+  InternetMainControls,
+  ControlHolder
+};

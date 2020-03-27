@@ -17,7 +17,6 @@ const BarChart = (props) => {
     [props.rAccess]: d[props.rAccess],
     type: 'bar-label'
   }));
-  // console.log(fillMissing(props.data, props.rAccess));
 
   return (
     <div className='Chart'>
@@ -49,7 +48,7 @@ const BarChart = (props) => {
             stroke: '#444'
           })
         }] }
-
+        customClickBehavior={ (d) => props.onClick(d) }
       />
     </div>
   );
@@ -79,6 +78,7 @@ const QBarChart = (props) => {
       rAccess={ props.rAccess }
       colorVar={ 'category' }
       numFmt={ props.numFmt }
+      onClick={ props.onClick }
     />
   );
 };

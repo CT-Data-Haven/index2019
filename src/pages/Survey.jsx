@@ -49,6 +49,10 @@ const Survey = ({ data, meta, intro }) => {
     setTopic(_topic);
   };
 
+  const onClick = (d) => {
+    setGroup(d.group);
+  };
+
   const qDisplay = getQMeta(meta[topic], indicator) || '';
   const groups = getNestedGrps(data[region][topic]);
   const profileData = getProfile(data[region][topic], 'group', group, meta[topic]);
@@ -87,6 +91,7 @@ const Survey = ({ data, meta, intro }) => {
               data={ data[region][topic] }
               rAccess={ indicator }
               numFmt={ fmt('0.0%') }
+              onClick={ onClick }
             />
           </Stage>
         </Col>

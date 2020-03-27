@@ -9,6 +9,7 @@ import Scores from './pages/Scores';
 import Survey from './pages/Survey';
 import Risks from './pages/Risks';
 import Chime from './pages/Chime';
+import Internet from './pages/Internet';
 
 import Header from './components/Header';
 import { NoteContext } from './utils/NoteContext.js';
@@ -17,35 +18,20 @@ import data from './data/dash_data.json';
 import meta from './data/meta.json';
 import page_meta from './data/page_meta.json';
 import town_topo from './data/town_topo.json';
-// // to scores
-// import index_data from './data/index_scatterplot.json';
-// import index_comps from './data/index_components.json';
-// import score_meta from './data/score_meta.json';
-// // to survey
-// import cws_data from './data/cws_indicators.json';
-// import cws_meta from './data/cws_meta.json';
-// // to risk by town
-// import town_data from './data/cws_health_by_town.json';
-// import town_topo from './data/town_topo.json';
-// // to chime
-// import chime_data from './data/chime_data.json';
-// import chime_meta from './data/chime_meta.json';
-// // intros
-// import intro_txt from './data/intro_text.json';
-// import dl_meta from './data/downloads.json';
 
 const hdrs = {
   survey: 'Wellbeing indicators',
   risks: 'Health risks by town',
   scores: 'Index scores',
-  chime: 'Hospital encounters'
+  chime: 'Hospital encounters',
+  internet: 'Internet access'
 };
 
 const useDownload = () => {
   const location = useLocation().pathname.substring(1);
   return {
     location: location,
-    urls: page_meta[location].download,
+    urls: (page_meta[location] ? page_meta[location].download : null),
     dw: 'https://data.world/camille86/cws2018',
     display: hdrs[location]
   };
@@ -66,7 +52,7 @@ const App = () => {
       <NoteContext.Provider value={ { noteOpen, handleClose } }>
 
         <Dash
-          intro={ page_meta[download.location].intro }
+          intro={ page_meta[download.location] ? page_meta[download.location].intro : null }
           note={ page_meta['covid'].intro.text }
           download={ download }
         >
@@ -96,6 +82,13 @@ const App = () => {
               <Chime
                 data={ data['chime_data'] }
                 meta={ meta['chime'] }
+                shape={ town_topo }
+              />
+            </Route>
+            <Route exact path='/internet'>
+              <Internet
+                data={ data['internet'] }
+                meta={ meta['internet'] }
                 shape={ town_topo }
               />
             </Route>

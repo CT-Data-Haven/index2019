@@ -268,9 +268,15 @@ const makeChoroScale = (data, scheme, nBrks) => {
   }
 };
 
-const makeTooltip = (name, value, format) => (
-  `${ name }: ${ fmt(format)(value) }`
-);
+const makeTooltip = (name, value, format, min = null) => {
+  if (min) {
+    const display = value === 0 ? '<' + fmt(format)(min) : fmt(format)(value);
+    return `${ name }: ${ display }`;
+  } else {
+    return `${ name }: ${ fmt(format)(value) }`;
+  }
+  // `${ name }: ${ fmt(format)(value) }`
+};
 
 /////////////////// geography
 const getBounds = (geo) => {
