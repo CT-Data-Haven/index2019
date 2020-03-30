@@ -32,8 +32,8 @@ const useDownload = () => {
   return {
     location: location,
     urls: (page_meta[location] ? page_meta[location].download : null),
-    dw: 'https://data.world/camille86/cws2018',
-    display: hdrs[location]
+    display: hdrs[location],
+    source: (page_meta[location] ? page_meta[location].source : null)
   };
 };
 
@@ -43,8 +43,7 @@ const App = () => {
   const handleClose = () => {
     setNoteOpen(!noteOpen);
   };
-// [1] "chime_data"         "cws_health_by_town" "cws_indicators"     "index_components"
-// [5] "index_scatterplot"  "sbass"
+
   return (
     <div className="App">
       <Header hdrs={ objToArray(hdrs, 'location', 'title') } />

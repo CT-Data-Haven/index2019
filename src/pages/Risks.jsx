@@ -62,7 +62,7 @@ const Risks = ({ data, meta, shape, intro }) => {
           </FormContext>
         </Col>
       </Row>
-
+      
       <Row>
         <Col md={ 6 }>
           <Stage
