@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App';
+import ErrorBoundary from './components/ErrorBoundary';
 import * as serviceWorker from './serviceWorker';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,9 +16,11 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import './index.css';
 
 ReactDOM.render(
-  <Router basename={ process.env.PUBLIC_URL + '/' }>
-    <App />
-  </Router>,
+
+    <Router basename={ process.env.PUBLIC_URL  }>
+      <ErrorBoundary><App /></ErrorBoundary>
+    </Router>
+  ,
   document.getElementById('root')
 );
 

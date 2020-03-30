@@ -4,10 +4,13 @@ import '../styles/Footer.css';
 
 const Footer = (props) => {
   let footerTxt;
-  if (props.urls === undefined) {
-    footerTxt = null;
+  if (!props.urls) {
+    footerTxt = (
+      <p>Check back for downloads to become available.</p>
+    )
   } else {
     // const dl = `https://query.data.world/s/${ props.urls.slug }`;
+    // const display = props.display || '';
     footerTxt = (
       <p>
         {`Download ${ props.display.toLowerCase() } data`} <a href={ props.urls.dwdownload }>here</a>, filter and analyze data online on <a href={ props.urls.dwsite }>data.world</a> (requires free sign-up), or download/clone from <a href={ props.urls.github }>GitHub</a> (advanced users).

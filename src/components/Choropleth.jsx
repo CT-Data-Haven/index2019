@@ -8,7 +8,7 @@ import '../styles/Chart.css';
 export default class Choropleth extends React.Component {
   getStyle = (feature) => {
     const name = feature.properties.name;
-    const fillColor = this.props.data[name] && this.props.data[name].value != undefined ? this.props.colorscale(this.props.data[name].value) : '#ccc';
+    const fillColor = this.props.data[name] && this.props.data[name].value !== undefined ? this.props.colorscale(this.props.data[name].value) : '#ccc';
     return {
       fillColor: fillColor,
       color: '#333',

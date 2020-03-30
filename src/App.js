@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import { objToArray, filterByString, filterTownLvl } from './utils/utils.js';
 import Dash from './components/Dash';
+import ErrorBoundary from './components/ErrorBoundary';
 
 import './App.css';
 
@@ -27,31 +28,45 @@ const hdrs = {
   internet: 'Internet access'
 };
 
+const pages = Object.keys(hdrs);
+const p0 = pages[0];
+
 const useDownload = () => {
-  const location = useLocation().pathname.substring(1);
+  console.log(useLocation());
+  let location = useLocation().pathname.substring(1);
+  if (!page_meta[location]) {
+    location = p0;
+    // TODO: push to history with useHistory
+  }
+  // if (!page_meta[location]) {
+  //     throw new Error('No page meta for location ' + location);
+  // } else {
   return {
     location: location,
-    urls: (page_meta[location] ? page_meta[location].download : null),
+    // urls: (page_meta[location] ? page_meta[location].download : null),
+    urls: page_meta[location].download,
     display: hdrs[location],
     source: (page_meta[location] ? page_meta[location].source : null)
   };
+// }
 };
 
 const App = () => {
   const download = useDownload();
+
   const [noteOpen, setNoteOpen] = useState(true);
   const handleClose = () => {
     setNoteOpen(!noteOpen);
   };
+  const intro = page_meta[download.location] ? page_meta[download.location].intro : { text: '', headline: '' };
 
   return (
     <div className="App">
       <Header hdrs={ objToArray(hdrs, 'location', 'title') } />
 
       <NoteContext.Provider value={ { noteOpen, handleClose } }>
-
         <Dash
-          intro={ page_meta[download.location] ? page_meta[download.location].intro : null }
+          intro={ intro }
           note={ page_meta['covid'].intro.text }
           download={ download }
         >
