@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import { Switch, Route, Redirect, useLocation, useHistory } from 'react-router-dom';
 import { objToArray, filterByString, filterTownLvl } from './utils/utils.js';
 import Dash from './components/Dash';
-import ErrorBoundary from './components/ErrorBoundary';
+// import ErrorBoundary from './components/ErrorBoundary';
 
 import './App.css';
 
@@ -35,10 +35,10 @@ const p0 = pages[0];
 
 const usePageInfo = () => {
   console.log(useLocation());
-  let location = useLocation().pathname.substring(1);
-  if (pages.indexOf(location) === -1) {
-    location = p0;
-    // TODO: push to history with useHistory
+  const history = useHistory();
+  const location = useLocation().pathname.substring(1);
+  if (location.length && pages.indexOf(location) === -1) {
+    history.push('/' + p0);
   }
   return {
     location,

@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App';
-import ErrorBoundary from './components/ErrorBoundary';
+// import ErrorBoundary from './components/ErrorBoundary';
 import * as serviceWorker from './serviceWorker';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,7 +18,7 @@ import './index.css';
 ReactDOM.render(
 
     <Router basename={ process.env.PUBLIC_URL  }>
-      <ErrorBoundary><App /></ErrorBoundary>
+      <App />
     </Router>
   ,
   document.getElementById('root')

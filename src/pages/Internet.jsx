@@ -9,7 +9,7 @@ import { ControlHolder, InternetMainControls } from '../components/Controls';
 import Choropleth from '../components/Choropleth';
 import Profile from '../components/Profile';
 
-import { getQMeta, getMapData, makeChoroScale, cleanHdrLabels, getProfile } from '../utils/utils.js';
+import { getQMeta, getMapData, makeChoroScale, getProfile } from '../utils/utils.js';
 
 const Internet = ({ data, meta, shape, intro }) => {
   const formMethods = useForm({
