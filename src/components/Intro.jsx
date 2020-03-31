@@ -31,10 +31,10 @@ const Intro = (props) => (
           </Alert>
 
           { /* intro text block */ }
-          <Alert variant='light' className='border border-color-dark'>
+          { props.text && <Alert variant='light' className='border border-color-dark'>
             <ReactMarkdown source={ props.text } />
             <p>For more information, see the other pages in the menu above, or visit DataHaven's <a href="http://www.ctdatahaven.org/communities">Communities</a> page or <a href="http://www.ctdatahaven.org">main website</a>.</p>
-          </Alert>
+          </Alert> }
         </div>
       )}
   </NoteContext.Consumer>

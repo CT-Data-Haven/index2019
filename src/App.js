@@ -11,6 +11,7 @@ import Survey from './pages/Survey';
 import Risks from './pages/Risks';
 import Chime from './pages/Chime';
 import Internet from './pages/Internet';
+import Resources from './pages/Resources';
 
 import Header from './components/Header';
 import { NoteContext } from './utils/NoteContext.js';
@@ -25,40 +26,34 @@ const hdrs = {
   risks: 'Health risks by town',
   scores: 'Index scores',
   chime: 'Hospital encounters',
-  internet: 'Internet access'
+  internet: 'Internet access',
+  resources: 'Resources'
 };
 
 const pages = Object.keys(hdrs);
 const p0 = pages[0];
 
-const useDownload = () => {
+const usePageInfo = () => {
   console.log(useLocation());
   let location = useLocation().pathname.substring(1);
-  if (!page_meta[location]) {
+  if (pages.indexOf(location) === -1) {
     location = p0;
     // TODO: push to history with useHistory
   }
-  // if (!page_meta[location]) {
-  //     throw new Error('No page meta for location ' + location);
-  // } else {
   return {
-    location: location,
-    // urls: (page_meta[location] ? page_meta[location].download : null),
-    urls: page_meta[location].download,
+    location,
     display: hdrs[location],
-    source: (page_meta[location] ? page_meta[location].source : null)
+    ...page_meta[location]
   };
-// }
 };
 
 const App = () => {
-  const download = useDownload();
+  const pg = usePageInfo();
 
   const [noteOpen, setNoteOpen] = useState(true);
   const handleClose = () => {
     setNoteOpen(!noteOpen);
   };
-  const intro = page_meta[download.location] ? page_meta[download.location].intro : { text: '', headline: '' };
 
   return (
     <div className="App">
@@ -66,9 +61,8 @@ const App = () => {
 
       <NoteContext.Provider value={ { noteOpen, handleClose } }>
         <Dash
-          intro={ intro }
           note={ page_meta['covid'].intro.text }
-          download={ download }
+          { ...pg }
         >
           <Switch>
             <Route exact path='/' render={ () => <Redirect to='/survey' /> } />
@@ -106,6 +100,11 @@ const App = () => {
                 shape={ town_topo }
               />
             </Route>
+            <Route exact path='/resources'>
+              <Resources
+                { ...page_meta['resources'].li }
+              />
+            </Route>
           </Switch>
         </Dash>
       </NoteContext.Provider>
@@ -114,6 +113,5 @@ const App = () => {
 };
 
 //////////////////
-
 
 export default App;
