@@ -6,6 +6,7 @@ import Dash from './components/Dash';
 
 import './App.css';
 
+import Home from './pages/Home';
 import Scores from './pages/Scores';
 import Survey from './pages/Survey';
 import Risks from './pages/Risks';
@@ -17,11 +18,13 @@ import Header from './components/Header';
 import { NoteContext } from './utils/NoteContext.js';
 
 import data from './data/dash_data.json';
+import front from './data/front_data.json';
 import meta from './data/meta.json';
 import page_meta from './data/page_meta.json';
 import town_topo from './data/town_topo.json';
 
 const hdrs = {
+  'home': 'Home',
   survey: 'Wellbeing indicators',
   risks: 'Health risks by town',
   scores: 'Index scores',
@@ -37,6 +40,7 @@ const usePageInfo = () => {
   console.log(useLocation());
   const history = useHistory();
   const location = useLocation().pathname.substring(1);
+  console.log(location);
   if (location.length && pages.indexOf(location) === -1) {
     history.push('/' + p0);
   }
@@ -65,7 +69,13 @@ const App = () => {
           { ...pg }
         >
           <Switch>
-            <Route exact path='/' render={ () => <Redirect to='/survey' /> } />
+            <Route exact path='/' render={ () => <Redirect to='/home' /> } />
+            <Route exact path='/home'>
+              <Home
+                data={ front }
+                hdrs={ hdrs }
+              />
+            </Route>
             <Route exact path='/survey'>
               <Survey
                 data={ data['cws_indicators'] }
