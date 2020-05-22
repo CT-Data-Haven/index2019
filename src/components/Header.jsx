@@ -9,10 +9,13 @@ const Header = (props) => (
     <Navbar expand='md' variant='light'  fixed='top'>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
-        <Nav variant='pills'>
+        <Nav variant='pills' onSelect={ props.onClick }>
           { props.hdrs.map((h) => (
             <LinkContainer to={ '/' + h.location } key={ `page-${ h.location }` }>
-              <Nav.Link>{ h.title }</Nav.Link>
+              <Nav.Link
+                eventKey={ h.location }
+                active={ h.location === props.activePage }
+              >{ h.title }</Nav.Link>
             </LinkContainer>
           )) }
         </Nav>

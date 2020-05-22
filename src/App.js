@@ -18,11 +18,13 @@ import Header from './components/Header';
 import { NoteContext } from './utils/NoteContext.js';
 
 import data from './data/dash_data.json';
-import front from './data/front_data.json';
+// import front from './data/front_data.json';
+import front from './data/front_data_slides.json';
 import meta from './data/meta.json';
 import page_meta from './data/page_meta.json';
 import town_topo from './data/town_topo.json';
 
+// constants
 const hdrs = {
   'home': 'Home',
   survey: 'Wellbeing indicators',
@@ -36,11 +38,11 @@ const hdrs = {
 const pages = Object.keys(hdrs);
 const p0 = pages[0];
 
+// hooks
 const usePageInfo = () => {
   console.log(useLocation());
   const history = useHistory();
   const location = useLocation().pathname.substring(1);
-  console.log(location);
   if (location.length && pages.indexOf(location) === -1) {
     history.push('/' + p0);
   }
@@ -54,14 +56,27 @@ const usePageInfo = () => {
 const App = () => {
   const pg = usePageInfo();
 
+  // state
   const [noteOpen, setNoteOpen] = useState(true);
+  const [activePage, setActivePage] = useState('home');
+
+  // handlers
   const handleClose = () => {
     setNoteOpen(!noteOpen);
   };
 
+  const handlePage = (page) => {
+    setActivePage(page);
+  };
+
+  // render
   return (
     <div className="App">
-      <Header hdrs={ objToArray(hdrs, 'location', 'title') } />
+      <Header
+        hdrs={ objToArray(hdrs, 'location', 'title') }
+        onClick={ handlePage }
+        activePage={ activePage }
+      />
 
       <NoteContext.Provider value={ { noteOpen, handleClose } }>
         <Dash
@@ -74,6 +89,7 @@ const App = () => {
               <Home
                 data={ front }
                 hdrs={ hdrs }
+                onClick={ handlePage }
               />
             </Route>
             <Route exact path='/survey'>
