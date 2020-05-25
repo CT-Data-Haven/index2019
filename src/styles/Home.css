@@ -30,8 +30,39 @@
   text-align: right;
 }
 
-.Home .front-card .front-card-footer {
+.Home .front-card-footer {
   font-size: 0.85em;
   font-weight: 400;
+  border: 1px solid rgba(0,0,0,.125);
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
   border-top: 0px;
+
+}
+
+.Home .front-card .card-body {
+
+}
+
+.Home .front-card.card {
+  border-bottom: 0px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.Home .carousel-indicators {
+  margin-bottom: 0.5em;
+  margin-top: 0.1em;
+}
+
+.Home .carousel-indicators li {
+  background-color: #707f8f;
+  width: 1.2em;
+  height: 0.3em;
+
+}
+
+.Home .carousel-control-next,
+.Home .carousel-control-prev {
+  width: 2em;
 }

@@ -19,7 +19,7 @@ import { NoteContext } from './utils/NoteContext.js';
 
 import data from './data/dash_data.json';
 // import front from './data/front_data.json';
-import front from './data/front_data_slides.json';
+import front from './data/front_data.json';
 import meta from './data/meta.json';
 import page_meta from './data/page_meta.json';
 import town_topo from './data/town_topo.json';
