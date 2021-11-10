@@ -10,26 +10,6 @@ const Intro = (props) => (
     {
       ({ noteOpen, handleClose }) => (
         <div className='Intro'>
-          { /* covid text block */ }
-          <Alert variant='warning' className='border border-color-warning'>
-            <Alert.Heading>
-              A note from DataHaven
-              <Button variant='link'
-                className='close text-uppercase'
-                data-dismiss='alert'
-                aria-label='Close note'
-                aria-controls='collapse-note'
-                aria-expanded={ noteOpen }
-                onClick={ handleClose }
-              >
-                { noteOpen ? 'hide' : 'show' }
-              </Button>
-            </Alert.Heading>
-            <Collapse in={ noteOpen }>
-              <ReactMarkdown source={ props.note } escapeHtml={ false } id='collapse-note' />
-            </Collapse>
-          </Alert>
-
           { /* intro text block */ }
           { props.text && <Alert variant='light' className='border border-color-dark'>
             <ReactMarkdown source={ props.text } />
